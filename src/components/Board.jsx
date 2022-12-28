@@ -11,23 +11,22 @@ const Board = ({ squares, onClick }) => {
     )
   }
 
+  const number = Math.sqrt(squares.length)
+
   return (
     <div>
-      <div className='board-row'>
-        {renderSquare(0)}
-        {renderSquare(1)}
-        {renderSquare(2)}
-      </div>
-      <div className='board-row'>
-        {renderSquare(3)}
-        {renderSquare(4)}
-        {renderSquare(5)}
-      </div>
-      <div className='board-row'>
-        {renderSquare(6)}
-        {renderSquare(7)}
-        {renderSquare(8)}
-      </div>
+      {
+        [...Array(number).keys()].map((row) =>
+          <div className='board-row' key={`row-#${row}`}>
+            {
+              [...Array(number).keys()].map((col) =>
+                <span key={`row-#${row}-col-#${col}`}>
+                  {renderSquare((row * 3 + col))}
+                </span>)
+            }
+          </div>
+        )
+      }
     </div>
   )
 }

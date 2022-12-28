@@ -16,7 +16,8 @@ const Game = () => {
    * ]
    */
   const [history, setHistory] = useState([{
-    squares: Array(9).fill(null)
+    squares: Array(9).fill(null),
+    pos: null
   }])
   const [stepNumber, setStepNumber] = useState(0)
   const [xIsNext, setxIsNext] = useState(true)
@@ -51,8 +52,16 @@ const Game = () => {
     }
 
     squaresC[i] = getTurn()
+    const humanPos = (i + 1)
+    const row = Math.ceil(humanPos / 3)
+    const col = humanPos - ((row - 1) * 3)
+
     setHistory(historyC.concat([{
-      squares: squaresC
+      squares: squaresC,
+      pos: {
+        col,
+        row
+      }
     }]))
     setStepNumber(historyC.length)
     setxIsNext(!xIsNext)
@@ -101,8 +110,10 @@ const Game = () => {
           {
             history.map((step, move) =>
               <Move
+                style='font-weight: bolder'
                 key={`move#${move}`}
                 move={move}
+                data={history[move]}
                 onClick={(step) => { jumpTo(step) }}
               />
             )
